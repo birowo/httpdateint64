@@ -3,7 +3,7 @@ package httpdateint64
 import "net/http"
 
 var (
-	days   = [...]string{"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}
+	days   = [...]string{"Thu", "Fri", "Sat", "Sun", "Mon", "Tue", "Wed"}
 	months = [...]string{"Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb"}
 )
 
@@ -11,7 +11,7 @@ var (
 func Conv(unixTime int64) (buf [len(http.TimeFormat)]byte) {
 
 	// 1. Hitung Hari dalam Seminggu (Epoch 1970-01-01 adalah Kamis / 4)
-	wday := (unixTime/86400 + 4) % 7
+	wday := (unixTime / 86400) % 7
 
 	dayStr := days[wday]
 
