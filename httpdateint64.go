@@ -4,7 +4,7 @@ import "net/http"
 
 var (
 	days   = [...]string{"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}
-	months = [...]string{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"}
+	months = [...]string{"Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb"}
 )
 
 // Conv mengubah UNIX timestamp (wajib >= 0) menjadi string HTTP Date Header (RFC 7231)
@@ -31,15 +31,11 @@ func Conv(unixTime int64) (buf [len(http.TimeFormat)]byte) {
 	mp := (5*doy + 2) / 153
 	d := doy - (153*mp+2)/5 + 1
 
-	var monthNum uint32
-	if mp < 10 {
-		monthNum = mp + 2
-	} else {
-		monthNum = mp - 10
+	if mp > 9 {
 		y++
 	}
 
-	monthStr := months[monthNum]
+	monthStr := months[mp]
 
 	// 4. Konstruksi String langsung ke Buffer Array 29 Byte (Zero-Alloc)
 	buf[0] = dayStr[0]

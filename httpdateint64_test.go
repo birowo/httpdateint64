@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func TestTambah(t *testing.T) {
+func TestConv(t *testing.T) {
 	now := time.Now()
 	httpdate := Conv(now.Unix())
 	if !bytes.Equal(
