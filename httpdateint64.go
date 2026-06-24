@@ -10,7 +10,7 @@ var (
 // Conv mengubah UNIX timestamp (wajib >= 0) menjadi string HTTP Date Header (RFC 7231)
 func Conv(unixTime int64) (buf [len(http.TimeFormat)]byte) {
 
-	// 1. Hitung Hari dalam Seminggu (Epoch 1970-01-01 adalah Kamis / 4)
+	// 1. Hitung Hari dalam Seminggu (Epoch 1970-01-01 adalah Kamis(Thu))
 	wday := (unixTime / 86400) % 7
 
 	dayStr := days[wday]
