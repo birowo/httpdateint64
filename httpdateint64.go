@@ -12,6 +12,11 @@ var (
 
 // Conv mengubah UNIX timestamp (wajib >= 0) menjadi string HTTP Date Header (RFC 7231)
 func Conv(unixTime int64) (buf [len(http.TimeFormat)]byte, err error) {
+	//488351454463999 adalah nilai positif unixTime terkecil supaya nilai mp tidak > 11 yang menyebabkan error out of bound
+	if unixTime < 0 || unixTime > 488351454463999 {
+		err = errors.New("httpdateint64.Conv error: unixTime out of safe bounds")
+		return
+	}
 
 	// 1. Hitung Hari dalam Seminggu (Epoch 1970-01-01 adalah Kamis(Thu))
 	wday := (unixTime / 86400) % 7
@@ -35,10 +40,6 @@ func Conv(unixTime int64) (buf [len(http.TimeFormat)]byte, err error) {
 	d := doy - (153*mp+2)/5 + 1
 
 	if mp > 9 {
-		if mp > 11 {
-			err = errors.New("httpdateint64.Conv error")
-			return
-		}
 		y++
 	}
 
