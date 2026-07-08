@@ -9,7 +9,8 @@ import (
 
 func TestConv(t *testing.T) {
 	now := time.Now()
-	httpdate, err := Conv(now.Unix())
+	var httpdate HttpDate
+	err := Conv(now.Unix(), &httpdate)
 	if err != nil || !bytes.Equal(
 		httpdate[:],
 		[]byte(
@@ -17,7 +18,7 @@ func TestConv(t *testing.T) {
 		),
 	) {
 		t.Errorf("e r r o r: %s != %s\n",
-			string(httpdate[:]),
+			string((httpdate)[:]),
 			now.UTC().Format(http.TimeFormat),
 		)
 	}
